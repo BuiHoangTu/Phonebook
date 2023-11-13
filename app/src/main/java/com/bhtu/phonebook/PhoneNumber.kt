@@ -23,5 +23,5 @@ class PhoneNumber (
     }
 
     val number: String
-        get() = this.chars.toString()
+        get() = String(this.chars)
 }

@@ -13,6 +13,7 @@ import android.widget.AdapterView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.util.Random
+import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
     private val phoneItems: MutableList<PhoneItem> = ArrayList();
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         val random = Random();
         for (phoneOwner in phoneOwners) {
-            val phoneStr = random.nextInt().toString()
+            val phoneStr = abs(random.nextInt()).toString()
             val email = "${phoneOwner.replace(' ', '.', true)}@gmail.com";
             phoneItems.add(
                 PhoneItem(
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                     email
                 )
             )
-            Log.v("TAG", "New phone $phoneOwner added")
+            Log.v("TAG", "New phone $phoneOwner-${PhoneNumber(phoneStr).number} added")
         }
     }
 
@@ -69,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
         val recyclerView = findViewById<RecyclerView>(R.id.phone_item_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = PhoneAdapter(this.phoneItems, this.applicationContext)
+        recyclerView.adapter = PhoneAdapter(this.phoneItems, this)
 
         // press and hold will trigger context menu
         registerForContextMenu(recyclerView)

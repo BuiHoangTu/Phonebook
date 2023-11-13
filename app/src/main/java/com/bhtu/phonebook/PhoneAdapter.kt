@@ -1,18 +1,10 @@
 package com.bhtu.phonebook
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.ColorFilter
-import android.graphics.Paint
-import android.graphics.PixelFormat
-import android.graphics.Typeface
-import android.graphics.drawable.Drawable
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import java.util.Locale
-import kotlin.math.min
 
 class PhoneAdapter(
     private val phoneItems: List<PhoneItem>,
@@ -22,9 +14,6 @@ class PhoneAdapter(
         val view = LayoutInflater
             .from(context)
             .inflate(R.layout.phone_item_in_list, parent, false)
-        view.setOnClickListener(fun(v) {
-
-        })
         return PhoneItemViewHolder(view)
     }
 
@@ -33,7 +22,18 @@ class PhoneAdapter(
     }
 
     override fun onBindViewHolder(holder: PhoneItemViewHolder, position: Int) {
-        holder.nameView.text = phoneItems[position].fullName
-        holder.imageView.setImageDrawable(phoneItems[position].avatar)
+        val selected = phoneItems[position]
+        holder.nameView.text = selected.fullName
+        holder.imageView.setImageDrawable(selected.avatar)
+
+        holder.itemView.setOnClickListener(fun(_) {
+            val intent = Intent(context, PhoneItemDetailActivity::class.java)
+            intent.putExtra("id", selected.id)
+            intent.putExtra("fullName", selected.fullName)
+            intent.putExtra("phoneNumber", selected.phoneNumber.number)
+            intent.putExtra("email", selected.email)
+
+            context.startActivity(intent)
+        })
     }
 }

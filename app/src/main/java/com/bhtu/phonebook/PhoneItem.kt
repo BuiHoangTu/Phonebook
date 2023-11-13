@@ -11,21 +11,23 @@ import java.util.Locale
 import kotlin.math.min
 
 class PhoneItem (
+    val id: Int,
     val fullName: String,
     val phoneNumber: PhoneNumber,
     val email: String
 ) {
-    companion object {
+    private companion object {
         var counter = 0;
     }
 
-    val id: Int;
     val avatar: Drawable
 
     init {
-        this.id = counter++;
+//        this.id = counter++;
         this.avatar = TextDrawable(fullName[0])
     }
+
+    constructor(fullName: String, phoneNumber: PhoneNumber, email: String) : this(counter++, fullName, phoneNumber, email)
 }
 
 private class TextDrawable(
