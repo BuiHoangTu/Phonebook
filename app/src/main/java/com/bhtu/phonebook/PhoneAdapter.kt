@@ -19,9 +19,13 @@ class PhoneAdapter(
     private val context: Context
 ): RecyclerView.Adapter<PhoneItemViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhoneItemViewHolder {
-        return PhoneItemViewHolder(LayoutInflater
+        val view = LayoutInflater
             .from(context)
-            .inflate(R.layout.phone_item_in_list, parent, false))
+            .inflate(R.layout.phone_item_in_list, parent, false)
+        view.setOnClickListener(fun(v) {
+
+        })
+        return PhoneItemViewHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -29,56 +33,7 @@ class PhoneAdapter(
     }
 
     override fun onBindViewHolder(holder: PhoneItemViewHolder, position: Int) {
-        val name = phoneItems[position].fullName
-        holder.nameView.text = name
-        holder.imageView.setImageDrawable(TextDrawable(name[0]))
+        holder.nameView.text = phoneItems[position].fullName
+        holder.imageView.setImageDrawable(phoneItems[position].avatar)
     }
-}
-
-private class TextDrawable(
-    private val char: Char
-): Drawable() {
-    private val foregroundPaint = Paint()
-    private val backgroundPaint = Paint()
-
-    init {
-        this.foregroundPaint.color = Color.WHITE
-        this.foregroundPaint.textSize = 40f
-        this.foregroundPaint.isAntiAlias = true
-        this.foregroundPaint.textAlign = Paint.Align.CENTER
-        this.foregroundPaint.typeface = Typeface.DEFAULT_BOLD
-
-        this.backgroundPaint.color = Color.GRAY
-        this.backgroundPaint.style = Paint.Style.FILL
-    }
-
-    override fun draw(canvas: Canvas) {
-        // draw bg
-        val centerX = this.bounds.width() / 2
-        val centerY = this.bounds.height() / 2
-        val radius = min(centerX, centerY)
-        canvas.drawCircle(centerX.toFloat(), centerY.toFloat(), radius.toFloat(), backgroundPaint)
-
-        // draw text
-        this.foregroundPaint.textSize = radius.toFloat() * 0.8f
-        canvas.drawText(
-            this.char.toString().uppercase(Locale.ROOT),
-            centerX.toFloat(),
-            centerY - ((foregroundPaint.descent() + foregroundPaint.ascent()) / 2),
-            this.foregroundPaint
-        )
-    }
-
-    override fun setAlpha(alpha: Int) {
-        this.foregroundPaint.alpha = alpha
-    }
-
-    override fun setColorFilter(colorFilter: ColorFilter?) {
-        this.foregroundPaint.colorFilter = colorFilter
-    }
-
-    override fun getOpacity(): Int {
-        return PixelFormat.TRANSLUCENT
-    }
-
 }
