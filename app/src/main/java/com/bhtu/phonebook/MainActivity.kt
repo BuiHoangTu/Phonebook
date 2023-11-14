@@ -10,13 +10,12 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.ListView
 import java.util.Random
 import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
-    private val phoneItems: MutableList<PhoneItem> = ArrayList();
+    private val phoneItems: MutableList<PhoneItem> = ArrayList()
 
     init {
         val phoneOwners = ArrayList(
@@ -28,16 +27,16 @@ class MainActivity : AppCompatActivity() {
                 "Micky Mouse",
                 "Pick War"
             )
-        );
+        )
         val charPool = ('a'..'z') + ('A'..'Z') + ('0'..'9')
         for (char in charPool) {
             phoneOwners.add("Human $char")
         }
 
-        val random = Random();
+        val random = Random()
         for (phoneOwner in phoneOwners) {
             val phoneStr = abs(random.nextInt()).toString()
-            val email = "${phoneOwner.replace(' ', '.', true)}@gmail.com";
+            val email = "${phoneOwner.replace(' ', '.', true)}@gmail.com"
             phoneItems.add(
                 PhoneItem(
                     phoneOwner,
@@ -68,12 +67,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.phone_item_view)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = PhoneAdapter(this.phoneItems, this)
+        val phoneItemView = findViewById<ListView>(R.id.phone_item_view)
+//        recyclerView.layoutManager = LinearLayoutManager(this)
+        phoneItemView.adapter = PhoneAdapter(this.phoneItems, this)
 
         // press and hold will trigger context menu
-        registerForContextMenu(recyclerView)
+        registerForContextMenu(phoneItemView)
 
 
     }
