@@ -74,7 +74,19 @@ class MainActivity : AppCompatActivity() {
         // press and hold will trigger context menu
         registerForContextMenu(phoneItemView)
 
+        phoneItemView.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, index, _ ->
+                run {
+                    val selected = phoneItems[index]
+                    val intent = Intent(this, PhoneItemDetailActivity::class.java)
+                    intent.putExtra("id", selected.id)
+                    intent.putExtra("fullName", selected.fullName)
+                    intent.putExtra("phoneNumber", selected.phoneNumber.number)
+                    intent.putExtra("email", selected.email)
 
+                    startActivity(intent)
+                }
+            }
     }
 
     // #region: define menu when you click and hold

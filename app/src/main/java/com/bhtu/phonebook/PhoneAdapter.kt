@@ -1,7 +1,6 @@
 package com.bhtu.phonebook
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,18 +30,7 @@ class PhoneAdapter(
                 .from(context)
                 .inflate(R.layout.phone_item_in_list, parent, false)
 
-
         val selected = phoneItems[position]
-        view.setOnClickListener(fun(_) {
-            val intent = Intent(context, PhoneItemDetailActivity::class.java)
-            intent.putExtra("id", selected.id)
-            intent.putExtra("fullName", selected.fullName)
-            intent.putExtra("phoneNumber", selected.phoneNumber.number)
-            intent.putExtra("email", selected.email)
-
-            context.startActivity(intent)
-        })
-
         view.findViewById<ImageView>(R.id.imageView).setImageDrawable(selected.avatar)
         view.findViewById<TextView>(R.id.textView).text = selected.fullName
 
